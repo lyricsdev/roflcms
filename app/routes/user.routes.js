@@ -14,7 +14,7 @@ const fileFilter = (req, file, cb) => {
       cb(null, false);
   }
 }
-const upload = multer({dest: 'D:/myvue/pizda/dist/uploads/',  fileFilter,
+const upload = multer({dest: './dist/uploads/',  fileFilter,
 limits: {
   fileSize: 500000
 }})
@@ -50,24 +50,20 @@ module.exports = function(app) {
   app.post("/api/skins/upload", [authJwt.verifyToken],upload.single('file'), (req, res, next) => {
 
 
-  // Получить информацию о файле ---> только через req.file
   let fileObj = req.file
     
-  // Получить информацию об идентификаторе пользователя в теле
   let body = req.body
-  // разделить тип 
   let originalArr = fileObj.originalname.split('.')
-  // Получить тип (jpg / png / gif)
   let type = originalArr[originalArr.length - 1]
-  fs.readFile('D:/myvue/pizda/dist/uploads/' + fileObj.filename, (err, data) => {
+  fs.readFile('./dist/uploads/' + fileObj.filename, (err, data) => {
     if (err) console.log(err)
 
-     // Создаем путь для копирования изображения и тип соединения для формирования полного файла изображения
-     let newPath = 'D:/myvue/pizda/dist/skins/' + body.body + "." + type
-     fs.writeFile(newPath, data, (err) => { // Записываем прочитанные данные
+     let newPath = './dist/skins/' + body.body + "." + type
+     console.log(newPath)
+     fs.writeFile(newPath, data, (err) => { 
       if (err) throw err
     })
-    fs.unlink('D:/myvue/pizda/dist/uploads/' + fileObj.filename, () => {
+    fs.unlink('./dist/uploads/' + fileObj.filename, () => {
       res.send(200)
     })
   })

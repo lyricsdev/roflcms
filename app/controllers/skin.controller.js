@@ -12,21 +12,19 @@ function deletefileskin(name)
        if (err) {                                                 
            console.error(err);                                    
        }                                                          
-      console.log('File has been Deleted');                           
    });      
 }
 function setdefaultskin(name)
 {
   try{
-    storage = 'D:/myvue/pizda/dist/skins/'
+    storage = './dist/skins/'
     let namef = storage + "default.png"
 
-    let namea = storage + name;
+    let namea = storage + name + ".png"
     if(fs.existsSync(namea))
     return;
     fs.copyFile(namef, namea, (err) => {
       if (err) throw err;
-      console.log('source.txt was copied to destination.txt');
     })     
   }catch(e){
 
@@ -41,13 +39,12 @@ exports.skindelete = (req, res) => {
 
   console.log(req.body);
   if (type == 'cloak'){
-    storage = "./../../../dist/cloaks"
+    storage = "./dist/cloaks"
 
   }else if (type == 'skin'){
-    storage = "./../../../dist/skins"
+    storage = "./dist/skins/"
   }
-  let link = 'D:/myvue/pizda/dist/skins/'  + username + '.png'
-  console.log(link)
+  let link = './dist/skins/'  + username + '.png'
   try{
     deletefileskin(link)
     setdefaultskin(username)
@@ -64,10 +61,8 @@ exports.skincheckexist = async (req, res) => {
   let name = req.body.username;
     console.log(req.body)
 
-  let storage = 'D:/myvue/pizda/dist/skins/'
+  let storage = './dist/skins/'
   let namef = storage + name + ".png"
-  console.log(namef)
-  console.log(fs.existsSync(namef))
   let data = {
       username: name,
       status : true
