@@ -8,7 +8,7 @@ app / config / db.config.js
  Открываем архив fa.tar
  Перекидываем его в node_modules
  Открываем файл _variables.scss
- меняем 4 строку на : "$fa-font-path:         "/webfonts" !default;"
+ меняем 4 строку на : "$fa-font-path:         "~@fortawesome/fontawesome-pro/webfonts" !default;"
  потом пишем
  npm run build
  node server
