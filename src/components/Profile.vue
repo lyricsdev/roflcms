@@ -21,28 +21,47 @@
         <h3>Внешний вид персонажа</h3>
         <p>Хотите подчеркнуть свою индивидуальность и выглядеть по-настоящему круто? Персонализируйте Вашего игрового персонажа и загрузите скин всего в два клика!</p>
       </div>
-      <div class="section preview">
-        <div class="row">
-          <div class="col-12 col-sm viewer">
-            <div class="viewer_dim" v-if="!flatSkin">
-              <div id="skin_container"></div>
-            </div>
-          </div>
-          <div>
-            <h4>Скин</h4>
+  <div class="section preview">
+                <div class="row">
+                    <div class="col-12 col-sm viewer">
+                        <div class="viewer_dim">
+                            <div id="skin_container"></div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm mt-4 mt-sm-0">
+                        <div>
+                            <h4>Скин</h4>
+                            <p>Всем игрокам доступна загрузка скинов в классическом 64x64 разрешении.</p>
+                            <p class="mt-2">
+                                <a href="" class="btn_common" @click.prevent="uploadSkin">Загрузить</a>
+                                <a href="#" target="_blank" class="btn_common ml-1" @click.prevent="downloadFile('/skins/' + user.login + '.png', user.login + '_skin.png')">
+                                    <i class="fas fa-arrow-alt-to-bottom"></i>
+                                </a>
+                                <a href="" class="btn_common ml-1" @click.prevent="deleteSkin">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </p>
+                        </div>
+                        <div class="mt-5">
+                            <h4>Плащ</h4>
 
-            <p class="mt-2">
-              <a href="" class="btn_common" @click.prevent="uploadSkin">Загрузить</a>
-              <a href="#" target="_blank" class="btn_common ml-1" @click.prevent="downloadFile('/skins/' + currentUser.username + '.png', currentUser.username + '_skin.png')">
-                <i class="fas fa-arrow-alt-to-bottom"></i>
-              </a>
-              <a href="" class="btn_common ml-1" @click.prevent="deleteSkin">
-                <i class="fas fa-trash-alt"></i>
-              </a>
-            </p>
-          </div>
-        </div>
-      </div>
+                            <div>
+                                <p>Загрузите плащ в высоком качестве HD разрешения прямо сейчас!</p>
+                                <p class="mt-2">
+                                    <a href="" class="btn_common" @click.prevent="uploadCloak">Загрузить</a>
+                                    <a href="#" target="_blank" class="btn_common ml-1" @click.prevent="downloadFile('/cloaks/' + user.login + '.png', user.login + '_cloak.png')">
+                                        <i class="fas fa-arrow-alt-to-bottom"></i>
+                                    </a>
+                                    <a href="" class="btn_common ml-1" @click.prevent="deleteCloak">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
         <input style="display: none;" id="skin_file" type="file" @change.prevent="uploadSkin($event)">
         <input style="display: none;" id="cloak_file" type="file" @change.prevent="uploadCloak($event)">
@@ -71,7 +90,7 @@ export default {
       flatSkin: false,
       skinLoading: false,
       status: false ,
-            show: true
+      capestatus: false
 
     }
   },
@@ -113,6 +132,15 @@ export default {
       }
       else $('#skin_file').click();
     },
+    uploadCloak(event){
+                if (event.target.files) {
+                    var formData = new FormData();
+                    formData.append("body", this.currentUser.username);
+                    formData.append("file", event.target.files[0]);
+                    this.upload1(formData);
+                }
+                else $('#cloak_file').click();
+            },
     updateSkin(){
       this.skinViewer.skinUrl = this.skinViewer.skinUrl
       this.skinViewer.capeUrl = this.skinViewer.capeUrl
@@ -125,15 +153,18 @@ export default {
             this.skinLoading = false;
           });
     },
+    upload1(formData){
+      this.skinLoading = true;
+      api.post('cloaks/upload', formData, {headers: {'Content-Type': 'multipart/form-data'}})
+          .then(response => {
+            this.updateSkin();
+            this.skinLoading = false;
+          });
+    },
     deleteSkin(){
       this.skinLoading = true;
-        let data = {
-          type: 'skin',
-            username: this.currentUser.username
-
-        }
       api.post('skins/delete', {
-       data
+        username: this.currentUser.username
       }).then(response => {
         this.updateSkin();
 
@@ -142,8 +173,8 @@ export default {
     },
     deleteCloak(){
       this.skinLoading = true;
-      api.post('skins/delete', {
-        type: 'cloak'
+      api.post('cloaks/delete', {
+        username: this.currentUser.username
       }).then(response => {
         this.updateSkin();
         this.skinLoading = false;
@@ -157,48 +188,57 @@ export default {
     {
       return this.status = false
     },
- async savePerson() {
- 
-  try {
-    const response = await api.post('/skins/checkexist', {
-      username: this.currentUser.username
-    })
-  return  this.status = response.data
-  } catch(error) {
-  }
-},
- async  initSkin(){
-      let element = document.getElementById("skin_container");
-      let numberOfChildren = element.getElementsByTagName('*').length;
-      if (numberOfChildren == 1) return;
+    async checkskin() {
+    try {
+        const response = await api.post('/skins/checkexist', {
+        username: this.currentUser.username
+        })
+         return  this.status = response.data
+        }catch(error) {
+        }
+    },
+    async checkcloak() {
+    try {
+        const response = await api.post('/cloaks/checkexist', {
+        username: this.currentUser.username
+        })
+         return  this.capestatus = response.data
+         console.log(response)
+        }catch(error) {
+        }
+    },
+    async initSkin(){
+        let element = document.getElementById("skin_container");
+        let numberOfChildren = element.getElementsByTagName('*').length;
+        if (numberOfChildren == 1) return;
 
-      let path
-      console.log(this.status)
-      await  this.savePerson()
-    console.log(this.status)
+        let cape,skin
+        await this.checkskin()
+        await this.checkcloak()
 
-      if(this.status === true)
-        path = '/skins/' + this.currentUser.username + '.png';
-     else 
-             path = '/skins/' + "default" + '.png';
+        if(this.status === true) {
+          skin = '/skins/' + this.currentUser.username + '.png'
+        } else {
+          skin = '/skins/' + "default" + '.png';
+        }
+        if(this.capestatus === true) cape = '/cloaks/' + this.currentUser.username + '.png'; else cape = ""
 
-      console.log(path)
 
-      this.skinViewer = new skinview3d.SkinViewer({
-        domElement: document.getElementById("skin_container"),
-        width: 300,
-        height: 320,
-        skinUrl: path,
-        capeUrl: '/cloaks/' + this.currentUser.username + '.png'
-      });
+        this.skinViewer = new skinview3d.SkinViewer({
+          domElement: document.getElementById("skin_container"),
+          width: 300,
+          height: 320,
+          skinUrl: skin,
+          capeUrl: cape
+        });
 
-      console.log("Init skin view");
-      console.log(this.skinViewer);
+        console.log("Init skin view");
+        console.log(this.skinViewer);
 
-      let control = skinview3d.createOrbitControls(this.skinViewer);
-      control.enableRotate = true;
-      control.enableZoom = false;
-      control.enablePan = false;
+        let control = skinview3d.createOrbitControls(this.skinViewer);
+        control.enableRotate = true;
+        control.enableZoom = false;
+        control.enablePan = false;
 
     },
   }

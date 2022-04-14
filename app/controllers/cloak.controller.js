@@ -6,7 +6,7 @@ var respond = {
 }
 var mime = require('mime-types')
 
-function deletefileskin(name)
+function deletefilecape(name)
 {
   fs.unlink(name, function (err) {            
        if (err) {                                                 
@@ -14,34 +14,14 @@ function deletefileskin(name)
        }                                                          
    });      
 }
-function setdefaultskin(name)
-{
-  try{
-    storage = './dist/skins/'
-    let namef = storage + "default.png"
-
-    let namea = storage + name + ".png"
-    if(fs.existsSync(namea))
-    return;
-    fs.copyFile(namef, namea, (err) => {
-      if (err) throw err;
-    })     
-  }catch(e){
-
-  }
-}
-exports.skindelete = (req, res) => {
+exports.cloakdelete = (req, res) => {
 
   let username = req.body.username
 
-  let storage;
 
-  console.log(req.body);
- 
-  let link = './dist/skins/'  + username + '.png'
+  let link = './dist/cloaks/'  + username + '.png'
   try{
-    deletefileskin(link)
-    setdefaultskin(username)
+    deletefilecape(link)
   }
   catch(e)
   {
@@ -50,12 +30,11 @@ exports.skindelete = (req, res) => {
 
 };
 
-exports.skincheckexist = async (req, res) => {
-
-  let name = req.body.username;
+exports.cloakcheckexist = async (req, res) => {
+let name = req.body.username;
     console.log(req.body)
 
-  let storage = './dist/skins/'
+  let storage = './dist/cloaks/'
   let namef = storage + name + ".png"
   let data = {
       username: name,
@@ -66,7 +45,7 @@ exports.skincheckexist = async (req, res) => {
     res.status(200).send(true);
     } else{ 
       data.status = false
-      res.send(data)
+      res.send(false)
     }
 
 };

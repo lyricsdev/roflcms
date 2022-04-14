@@ -1,6 +1,8 @@
 const { authJwt } = require("../middleware");
 const controller = require("../controllers/user.controller");
 const skincontroller = require("../controllers/skin.controller");
+const cloakcontroller = require("../controllers/cloak.controller");
+
 var fs = require('fs')
 const multer = require('multer')
 const fileFilter = (req, file, cb) => {
@@ -68,6 +70,25 @@ module.exports = function(app) {
     })
   })
 });
+app.post("/api/cloaks/upload", [authJwt.verifyToken],upload.single('file'), (req, res, next) => {
+let fileObj = req.file
+    
+  let body = req.body
+  let originalArr = fileObj.originalname.split('.')
+  let type = originalArr[originalArr.length - 1]
+  fs.readFile('./dist/uploads/' + fileObj.filename, (err, data) => {
+    if (err) console.log(err)
+
+     let newPath = './dist/cloaks/' + body.body + "." + type
+     console.log(newPath)
+     fs.writeFile(newPath, data, (err) => { 
+      if (err) throw err
+    })
+    fs.unlink('./dist/uploads/' + fileObj.filename, () => {
+      res.send(200)
+    })
+  })
+});
   app.post(
     "/api/skins/delete",
     [authJwt.verifyToken],
@@ -76,5 +97,14 @@ module.exports = function(app) {
   app.post(
     "/api/skins/checkexist",
     skincontroller.skincheckexist
+  );
+  app.post(
+    "/api/cloaks/delete",
+    [authJwt.verifyToken],
+    cloakcontroller.cloakdelete
+  );
+  app.post(
+    "/api/cloaks/checkexist",
+    cloakcontroller.cloakcheckexist
   );
 };
