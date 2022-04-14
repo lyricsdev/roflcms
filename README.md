@@ -11,6 +11,6 @@ app / config / db.config.js
  меняем 4 строку на : "$fa-font-path:         "~@fortawesome/fontawesome-pro/webfonts" !default;"
  потом пишем
  npm run build
- node server
+ npm start
  Переходим на localhost:8080
 
