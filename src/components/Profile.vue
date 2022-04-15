@@ -14,15 +14,14 @@
       <strong>Id:</strong>
       {{currentUser.id}}
     </p>
-   
   <div class="row character">
     <div :class="'col-12 col-lg-6 ' + (skinLoading ? 'unload' : '')">
       <div class="section">
         <h3>Внешний вид персонажа</h3>
         <p>Хотите подчеркнуть свою индивидуальность и выглядеть по-настоящему круто? Персонализируйте Вашего игрового персонажа и загрузите скин всего в два клика!</p>
       </div>
-  <div class="section preview">
-                <div class="row">
+            <div class="section preview">
+           <div class="row">
                     <div class="col-12 col-sm viewer">
                         <div class="viewer_dim">
                             <div id="skin_container"></div>
@@ -31,7 +30,7 @@
                     <div class="col-12 col-sm mt-4 mt-sm-0">
                         <div>
                             <h4>Скин</h4>
-                            <p>Всем игрокам доступна загрузка скинов в классическом 64x64 разрешении.</p>
+                            <p>Вы можете загрузить любой скин в высоком HD качестве!</p>
                             <p class="mt-2">
                                 <a href="" class="btn_common" @click.prevent="uploadSkin">Загрузить</a>
                                 <a href="#" target="_blank" class="btn_common ml-1" @click.prevent="downloadFile('/skins/' + user.login + '.png', user.login + '_skin.png')">
@@ -57,18 +56,16 @@
                                     </a>
                                 </p>
                             </div>
-
+                           
                         </div>
                     </div>
                 </div>
             </div>
-    </div>
         <input style="display: none;" id="skin_file" type="file" @change.prevent="uploadSkin($event)">
         <input style="display: none;" id="cloak_file" type="file" @change.prevent="uploadCloak($event)">
   </div>
   </div>
-
-
+  </div>
 </template>
 
 <script>
@@ -76,10 +73,7 @@ import * as skinview3d from "skinview3d";
 import { saveAs } from 'file-saver';
 import $ from "jquery";
 import api from '../services/api'
-import axios from "axios";
-    import moment from "moment";
 export default {
-
   name: 'Profile',
   data(){
     return {
@@ -103,17 +97,16 @@ export default {
     if (!this.currentUser) {
       this.$router.push('/login');
     }
-            this.$nextTick(() => {
-                this.initSkin();
-            });
+    this.$nextTick(() => {
+      this.initSkin();
+      });
   },
   watch: {
   '$route': function () {
-                this.$nextTick(() => {
-                    this.initSkin();
-                });
-            },
-  
+    this.$nextTick(() => {
+      this.initSkin();
+      });
+    },
   },
   methods: {
     downloadFile(url, name){
@@ -127,20 +120,19 @@ export default {
         formData.append("body", this.currentUser.username);
         formData.append("file", event.target.files[0]);
         this.upload(formData);
-              console.log(formData)
 
       }
       else $('#skin_file').click();
     },
     uploadCloak(event){
-                if (event.target.files) {
-                    var formData = new FormData();
-                    formData.append("body", this.currentUser.username);
-                    formData.append("file", event.target.files[0]);
-                    this.upload1(formData);
-                }
-                else $('#cloak_file').click();
-            },
+      if (event.target.files) {
+        var formData = new FormData();
+        formData.append("body", this.currentUser.username);
+        formData.append("file", event.target.files[0]);
+        this.upload1(formData);
+        }
+      else $('#cloak_file').click();
+    },
     updateSkin(){
       this.skinViewer.skinUrl = this.skinViewer.skinUrl
       this.skinViewer.capeUrl = this.skinViewer.capeUrl
@@ -231,15 +223,10 @@ export default {
           skinUrl: skin,
           capeUrl: cape
         });
-
-        console.log("Init skin view");
-        console.log(this.skinViewer);
-
         let control = skinview3d.createOrbitControls(this.skinViewer);
-        control.enableRotate = true;
-        control.enableZoom = false;
-        control.enablePan = false;
-
+                control.enableRotate = true;
+                control.enableZoom = false;
+                control.enablePan = false;
     },
   }
 };
