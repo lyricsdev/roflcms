@@ -87,6 +87,7 @@ body {
   }
 
 }
+  //Настройки персонажа
   .character{
     .section.preview{
       background-color: $blue!important;
@@ -147,10 +148,128 @@ body {
     }
     .viewer_dim{
       &:not(:first-child){
-        position:fixed;
+        position:relative;
         display:none;
         height:100%;
         padding:50px 0;
+      }
+    }
+    .chat_color{
+      position:relative;
+      padding:0;
+
+      .section{
+        position:relative;
+        overflow:hidden;
+      }
+      .body{
+        margin: 14px 0 21px;
+      }
+      .row{
+        margin:0;
+        >label{
+          padding:17px 0;
+        }
+        >div{
+          padding-right:0;
+        }
+        +.row{
+          label{
+            border-top:1px solid rgba(0, 0, 0, 0.1);
+          }
+        }
+      }
+      .form-control,
+      label{
+        line-height: 22px;
+        font-size:16px;
+        color: #717597;
+        text-align:left;
+      }
+      input{
+        background:#fff;
+        box-shadow:0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+
+        &:focus{
+          box-shadow:0 0 0 0.2rem rgba(105, 119, 250, 0.5);
+        }
+        //border-color:transparent;
+        //background: rgba(0, 0, 0, 0.5);
+      }
+      .select{
+        display:block;
+        line-height:28px;
+        font-size:16px;
+        width:100%;
+        option{
+          background:#fff;
+        }
+      }
+      @keyframes backdrops{
+        0%, 32.99%{
+          background-image:url('/img/plains.png');
+        }
+        33%, 65.99%{
+          background-image:url('/img/bg_wool_dark.png');
+        }
+        66%, 100%{
+          background-color:$blue;
+        }
+      }
+      .footer{
+        background-color:$blue;
+        font-family:'Minecraft', sans-serif;
+        font-weight:normal;
+        color:#fff;
+        font-size:16px;
+        line-height:28px;
+        padding:25px 50px;
+        margin: 0 -50px -50px;
+        text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+        *{
+          font-family:inherit;
+        }
+        &:hover{
+          animation:3s backdrops linear infinite;
+        }
+      }
+      &.locked{
+        .section{
+          filter: blur(3px);
+          opacity: .2;
+        }
+        .lock_screen{
+          display:flex;
+          opacity:1;
+          visibility: visible;
+        }
+      }
+      .lock_screen{
+        display:none;
+        position:absolute;
+        border-radius:30px;
+        height:100%;
+        width:100%;
+        top:0;
+        left:0;
+        opacity:0;
+        visibility:hidden;
+        flex-direction: column;
+        justify-content: center;
+        align-items:center;
+        text-align:center;
+        z-index:1;
+
+        i{
+          color: $blue;
+          font-size: 4rem;
+        }
+        p{
+          font-size: 21px;
+          color: #717597;
+          max-width: 75%;
+          margin:15px 0;
+        }
       }
     }
   }

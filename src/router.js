@@ -31,25 +31,21 @@ const routes = [
   {
     path: "/profile",
     name: "profile",
-    // lazy-loaded
     component: Profile,
   },
   {
     path: "/admin",
     name: "admin",
-    // lazy-loaded
     component: BoardAdmin,
   },
   {
     path: "/mod",
     name: "moderator",
-    // lazy-loaded
     component: BoardModerator,
   },
   {
     path: "/user",
     name: "user",
-    // lazy-loaded
     component: BoardUser,
   },
   { path: '/:pathMatch(.*)*', component: error404 },

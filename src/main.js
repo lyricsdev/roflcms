@@ -14,10 +14,12 @@ setupInterceptors(store);
 
 createApp(App)
   .use(scplugin)
-  .use(router)
   .use(store)
+  .use(router)
   .component("font-awesome-icon", FontAwesomeIcon)
   .mount("#app");
+
+  
   router.beforeEach((to, from, next) => {
     const nearestWithTitle = to.matched.slice().reverse().find(r => r.meta && r.meta.title);
 

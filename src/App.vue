@@ -2,20 +2,31 @@
 
   <div id="app" class=''>
         <navigation-menu></navigation-menu>
-
-
     <div class="container">
       <router-view />
+      
     </div>
+          <div class="backdrop">
+                    <div class="item circle"></div>
+                    <div class="item circle"></div>
+                    <div class="item circle"></div>
+                    <!---->
+                    <div class="item circle"></div>
+                    <div class="item circle"></div>
+                    <div class="item circle"></div>
+
+                </div>
   </div>
 </template>
 
 <script>
 import EventBus from "./common/EventBus";
 import NavigationMenu from "./components/navbar.vue";
+import Modals from "./modals/modalcontroller.vue";
+    import { mapGetters } from 'vuex';
 
 export default {
-  components: {NavigationMenu},
+  components: {Modals,NavigationMenu},
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -33,7 +44,9 @@ export default {
       }
 
       return false;
-    }
+    },
+                ...mapGetters(['isLogged', 'isLoaded'])
+
   },
   methods: {
     logOut() {
@@ -53,4 +66,7 @@ export default {
 </script>
 <style lang="scss">
 @import "../assets/style.scss";
+@import "../assets/modal.scss";
+
+
 </style>
