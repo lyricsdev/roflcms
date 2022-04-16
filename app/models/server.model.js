@@ -28,16 +28,16 @@ module.exports = (sequelize, Sequelize) => {
       rcon_pass: {
         type: Sequelize.STRING
       },
-      db_host: {
+      db_hostname: {
         type: Sequelize.STRING
       },
-      db_name: {
+      db_table_name: {
         type: Sequelize.STRING
       },
-      db_user: {
+      db_table_user: {
         type: Sequelize.STRING
       },
-      db_password: {
+      db_table_password: {
         type: Sequelize.STRING
       },
       shop_id: {
