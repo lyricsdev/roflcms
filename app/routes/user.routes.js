@@ -2,6 +2,7 @@ const { authJwt } = require("../middleware");
 const controller = require("../controllers/user.controller");
 const skincontroller = require("../controllers/skin.controller");
 const cloakcontroller = require("../controllers/cloak.controller");
+const ServerController = require("../controllers/server.controller");
 
 var fs = require('fs')
 const multer = require('multer')
@@ -107,4 +108,5 @@ let fileObj = req.file
     "/api/cloaks/checkexist",
     cloakcontroller.cloakcheckexist
   );
+  app.post("/api/getservers", ServerController.getservers)
 };
