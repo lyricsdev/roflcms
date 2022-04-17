@@ -16,6 +16,14 @@
                         </div>
                     </li>
                 </ul>
+                <ul class="d-none d-lg-block" v-if="!this.isLogged">
+                    <li class="d-lg-none d-xl-inline-block">
+                        <a href="#" id="goToLogin" class="link" @click.prevent="openLoginModal">Вход на сайт</a>
+                    </li>
+                    <li>
+                        <a href="#" id="goToReg" class="btn_common primary" @click.prevent="openRegisterModal">Регистрация</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -33,11 +41,13 @@
             
         },
         methods:{
-
+            openLoginModal(){
+                this.$store.dispatch('setLoginModal', true);
+            }
         },
          data(){
             return {
-                isLogged: false,
+                isLogged: true,
             }
         },
         watch:{

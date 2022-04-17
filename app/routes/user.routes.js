@@ -3,9 +3,9 @@ const controller = require("../controllers/user.controller");
 const skincontroller = require("../controllers/skin.controller");
 const cloakcontroller = require("../controllers/cloak.controller");
 const ServerController = require("../controllers/server.controller");
-
 var fs = require('fs')
 const multer = require('multer')
+
 const fileFilter = (req, file, cb) => {
   
   if(file.mimetype === "image/png" || 
@@ -110,4 +110,6 @@ let fileObj = req.file
   );
   app.post("/api/getservers", ServerController.getservers)
   app.post("/api/rconsend", ServerController.rconsend)
+  app.post("/api/quests", ServerController.quests)
+
 };

@@ -14,6 +14,12 @@
       <strong>Id:</strong>
       {{currentUser.id}}
     </p>
+      <ul id="example-1">
+        <p v-for="item in JSON.parse(servers)" :key="item.id">
+              {{"server online is : " + item.online + "/" + item.max}}
+          </p>
+      </ul>
+    
   <div class="row character">
     <div :class="'col-12 col-lg-6 ' + (skinLoading ? 'unload' : '')">
       <div class="section">
@@ -84,8 +90,8 @@ export default {
       flatSkin: false,
       skinLoading: false,
       status: false ,
-      capestatus: false
-
+      capestatus: false,
+      servers: null
     }
   },
   computed: {
@@ -93,19 +99,24 @@ export default {
       return this.$store.state.auth.user;
     }
   },
-  mounted() {
+  async mounted() {
     if (!this.currentUser) {
       this.$router.push('/login');
     }
     this.$nextTick(() => {
       this.initSkin();
       });
+
+      await this.getservers()
+      console.log(this.servers);
+
   },
   watch: {
   '$route': function () {
     this.$nextTick(() => {
       this.initSkin();
       });
+     
     },
   },
   methods: {
@@ -195,7 +206,15 @@ export default {
         username: this.currentUser.username
         })
          return  this.capestatus = response.data
-         console.log(response)
+         console.log(response.data)
+        }catch(error) {
+        }
+    },
+     async getservers() {
+    try {
+        const response = await api.post('/getservers', {
+        })
+         return  this.servers = JSON.stringify(response.data)
         }catch(error) {
         }
     },
@@ -215,7 +234,7 @@ export default {
         }
         if(this.capestatus === true) cape = '/cloaks/' + this.currentUser.username + '.png'; else cape = ""
 
-
+          
         this.skinViewer = new skinview3d.SkinViewer({
           domElement: document.getElementById("skin_container"),
           width: 300,
@@ -227,6 +246,7 @@ export default {
                 control.enableRotate = true;
                 control.enableZoom = false;
                 control.enablePan = false;
+                console.log(this.skinViewer);
     },
   }
 };

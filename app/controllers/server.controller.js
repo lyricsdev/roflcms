@@ -5,16 +5,48 @@ const util = require('minecraft-server-util');
 const { stringify } = require("uuid");
 
 const client = new util.RCON();
-
+const options = {
+    sessionID: 1, // a random 32-bit signed number, optional
+    enableSRV: true // SRV record lookup
+};
 const connectOpts = {
     timeout: 1000 * 5
 };
 const loginOpts = {
     timeout: 1000 * 5
 };
+setInterval(() => {
+    Server.findAll( {
+        attributes: ['id', 'port', "ip"]
+
+    }).then(async (server) => {
+        server.forEach(server => {
+            util.queryBasic(server.ip, server.port, options)
+            .then((result) => {
+                let pizda = result.players
+                Server.update(   // Values to update
+                {
+                    online: pizda.online,
+                    max: pizda.max
+
+                },
+                { // Clause
+                    where: 
+                    {
+                        id: server.id
+                    }
+                });
+            })
+            .catch((error) => console.error(error));
+
+        });
+    });   
+
+  }, (300000));
 exports.getservers = (req, res) => {
     Server.findAll( {
-         limit: 1
+        attributes: ['id', 'name', "max","online"]
+
     }).then(async (server) => {
         res.send(server).status(200);
 
@@ -38,9 +70,23 @@ exports.rconsend = async(req, res) => {
             await client.close();
             } catch(e){ 
                 await client.close();
-                res.send('unkown command').status(200)
+                res.send('unknown command').status(200)
             }
         })
         
 };
-  
+exports.quests = async(req, res) => {
+
+    var quests = {
+        1:{
+            name : " pizda"
+        }
+    }
+
+    let user = {
+        username: req.body.username,
+        questsid: req.body.questid,
+        questsid: req.body.completed  
+    }
+    console.log(quests[1].name)
+};
