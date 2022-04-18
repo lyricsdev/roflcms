@@ -6,7 +6,6 @@ const Op = db.Sequelize.Op;
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-
 function generateuuid() {
   var d = new Date().getTime();
   var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
@@ -16,7 +15,34 @@ function generateuuid() {
   });
   return uuid;
 }
-exports.signup = (req, res) => {
+function sendemail(email, username, password) {
+  const nodemailer = require("nodemailer");
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "",
+      pass: "",
+    },
+  });
+  const mailOptions = {
+    from: "",
+    to: email,
+    subject: "Account Created",
+    html: `<h1>Welcome to the server</h1>
+    <p>Your username is: ${username}</p>
+    <p>Your password is: ${password}</p>
+    `,
+  };
+  transporter.sendMail(mailOptions, function(error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+}
+
+  exports.signup = (req, res) => {
   // Save User to Database
   User.create({
     username: req.body.username,

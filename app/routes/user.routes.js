@@ -3,6 +3,8 @@ const controller = require("../controllers/user.controller");
 const skincontroller = require("../controllers/skin.controller");
 const cloakcontroller = require("../controllers/cloak.controller");
 const ServerController = require("../controllers/server.controller");
+const newscontroller = require("../controllers/news.controller");
+
 var fs = require('fs')
 const multer = require('multer')
 
@@ -109,7 +111,6 @@ let fileObj = req.file
     cloakcontroller.cloakcheckexist
   );
   app.post("/api/getservers", ServerController.getservers)
-  app.post("/api/rconsend", ServerController.rconsend)
   app.post("/api/quests", ServerController.quests)
-
+  app.post("/api/getnews",newscontroller.getnews)
 };
