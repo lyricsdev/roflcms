@@ -8,8 +8,19 @@ module.exports = (sequelize, Sequelize) => {
     },
     password: {
       type: Sequelize.STRING
+    },
+    uuid: {
+      type: Sequelize.STRING
+    },
+    accessToken: {
+      type: Sequelize.STRING
+    },
+    serverID: {
+      type: Sequelize.STRING
+    },
+    hwidId: {
+      type: Sequelize.STRING
     }
   });
-
   return User;
 };
