@@ -27,7 +27,7 @@ const state = {
 };
 
 const getters = {
-menu: state => state.menu,
+    menu: state => state.menu,
 };
 
 const actions = {};
@@ -35,8 +35,9 @@ const actions = {};
 const mutations = {};
 
 export default {
-state,
-getters,
-actions,
-mutations
+    state,
+    getters,
+    actions,
+    mutations
 }
+

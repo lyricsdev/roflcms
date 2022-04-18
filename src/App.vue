@@ -22,11 +22,10 @@
 <script>
 import EventBus from "./common/EventBus";
 import NavigationMenu from "./components/navbar.vue";
-import Modals from "./modals/modalcontroller.vue";
     import { mapGetters } from 'vuex';
 
 export default {
-  components: {Modals,NavigationMenu},
+  components: {NavigationMenu},
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
