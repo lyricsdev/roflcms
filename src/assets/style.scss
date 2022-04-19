@@ -7,6 +7,7 @@
 @import "~@fortawesome/fontawesome-pro/scss/light";
 @import "~@fortawesome/fontawesome-pro/scss/duotone";
 @import "~@fortawesome/fontawesome-pro/scss/brands";
+
 // VARIABLES
 // MINECRAFT
 
@@ -26,22 +27,11 @@ $night: darken(desaturate($blue, 25%), 50%);
 $nightLighten: lighten($night, 5%);
 $nightDarken: darken($night, 5%);
 
-/* оранжевый  */ $orange: adjust-hue($blue, 150deg);
-/* зеленый    */ $green: #4fb363;
-/* желтый     */ $yellow: adjust-hue($blue, 170%);
-/* алмазный   */ $diamond: adjust-hue($blue,-35);
-/* розовый    */ $pink: adjust-hue($blue,70);
-/* красный    */ $red: adjust-hue($blue,120);
-/* фиолетовый */ $magenta: adjust-hue($blue,30);
-/* голубой    */ $aqua: #69faec;
-/* пурпурный  */ $purple: #e469fa;
 @mixin navDrop($width){
   left: calc((100% - #{$width})/2);
   width: $width;
 }
-@mixin FontAwesome(){
-  font-family: 'Font Awesome 5 Pro';
-}
+
 @mixin placeholder {
   &::-webkit-input-placeholder { @content; }
   &:-moz-placeholder           { @content; }
@@ -58,9 +48,6 @@ body {
   background-color: #181818;
   h3 {
     color: #fff;
-  }
-  p {
-    color : #fff
   }
   li {
     color : #fff
@@ -80,12 +67,56 @@ body {
   }
 }
 
+.monitor {
+  position: relative;
+  display: inline-block;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  color: #fff;
+  opacity: 1;
+  background-clip: border-box;
+
+  border-radius: 9px;
+  margin-left: 9px;
+}
+.monitor-body {
+  border-radius: 9px;
+  background-color: #fff;
+
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+}
+.monitor-text {
+  opacity: 1;
+  color: #000;
+}
+
+
 .container {
   .jumbotron {
     background-color: #181818;
     
   }
-
+  .monitoring {
+    color: #fff;
+    background:rgba(145, 86, 229, 0.8);
+    display: inline-block;
+    border-radius: 9px;
+    margin-right: 50px;
+    height: 250px;
+    width: 200px;
+  }
+  .mon-title {
+    text-align: center;
+  }
+  .mon-onlinebar {
+    border: 0.1875em linear-gradient(left, #000, #fff);
+    border-radius: 50%;
+    height: 5em;
+    width: 5em;
+  }
 }
   //Настройки персонажа
   .character{
@@ -425,7 +456,6 @@ body {
       &::after{
         content:'\f061';
         display: inline-block;
-        @include FontAwesome();
         margin: 0 0 0 10px;
         font-size: 16px;
       }
@@ -467,7 +497,7 @@ body {
       color: #888;
       margin: 0;
   }
-  
+
   #main{
       display: table;
       width: 100%;

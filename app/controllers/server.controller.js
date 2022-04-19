@@ -24,7 +24,7 @@ setInterval(() => {
             util.queryBasic(server.ip, server.port, options)
             .then((result) => {
                 let pizda = result.players
-                Server.update(   // Values to update
+                Server.update(
                 {
                     online: pizda.online,
                     max: pizda.max

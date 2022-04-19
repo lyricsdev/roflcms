@@ -4,7 +4,7 @@
         <navigation-menu></navigation-menu>
     <div class="container">
       <router-view />
-      
+
     </div>
           <div class="backdrop">
                     <div class="item circle"></div>
