@@ -49,7 +49,7 @@ return {
     );
     await this.getnews()
     await this.getservers()
-
+    
   },
   methods: {
   async getnews() {

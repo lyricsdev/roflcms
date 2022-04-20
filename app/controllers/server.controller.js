@@ -15,7 +15,7 @@ const connectOpts = {
 const loginOpts = {
     timeout: 1000 * 5
 };
-setInterval(() => {
+setInterval(async () => {
     Server.findAll( {
         attributes: ['id', 'port', "ip"]
 
@@ -28,9 +28,8 @@ setInterval(() => {
                 {
                     online: pizda.online,
                     max: pizda.max
-
                 },
-                { // Clause
+                {
                     where: 
                     {
                         id: server.id
@@ -38,7 +37,6 @@ setInterval(() => {
                 });
             })
             .catch((error) => console.error(error));
-
         });
     });   
 
@@ -62,7 +60,7 @@ exports.rconsend = async(req, res) => {
         }
       }).then(async (server) => {
             try {
-            await client.connect(server.ip, 25575, connectOpts);
+            await client.connect(server.ip, server.port, connectOpts);
             await client.login(server.rcon_pass, loginOpts);
             
             const message = await client.execute(req.body.command);

@@ -76,8 +76,6 @@ function sendemail(email, username, password) {
 };
 
 exports.signin = (req, res) => {
-        console.log(req.body)
-
   User.findOne({
     where: {
       username: req.body.username

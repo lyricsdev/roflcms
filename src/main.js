@@ -6,7 +6,8 @@ import store from "./store";
 import "bootstrap";
 import { FontAwesomeIcon } from './plugins/font-awesome'
 import scplugin from "./scplugin";
-
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 import setupInterceptors from './services/setupInterceptors';
 
 
