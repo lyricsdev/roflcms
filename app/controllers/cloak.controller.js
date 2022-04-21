@@ -1,19 +1,8 @@
-var fs = require('fs')
+const fs = require('fs')
+const player = require("./../services/player.service");
 
-var respond = {
-  'success' : false,
-  'message' : 'Ошибка загрузки! Пожалуйста, выберите тип файла!'
-}
-var mime = require('mime-types')
 
-function deletefilecape(name)
-{
-  fs.unlink(name, function (err) {            
-       if (err) {                                                 
-           console.error(err);                                    
-       }                                                          
-   });      
-}
+
 exports.cloakdelete = (req, res) => {
 
   let username = req.body.username
@@ -21,7 +10,7 @@ exports.cloakdelete = (req, res) => {
 
   let link = './dist/cloaks/'  + username + '.png'
   try{
-    deletefilecape(link)
+    player.deletefilecape(link)
   }
   catch(e)
   {
@@ -32,7 +21,6 @@ exports.cloakdelete = (req, res) => {
 
 exports.cloakcheckexist = async (req, res) => {
 let name = req.body.username;
-    console.log(req.body)
 
   let storage = './dist/cloaks/'
   let namef = storage + name + ".png"

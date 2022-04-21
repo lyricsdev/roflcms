@@ -1,14 +1,11 @@
 <template>
-
-<div class="monitor" style="width: 20rem;" v-for="item in JSON.parse(servers)" :key="item.id">
-  <div class="monitor-body">
-    <h5 class="card-title">DTM</h5>
-    <img src="https://imgur.com/XizWKdq.png" class="card-img-top" alt="https://imgur.com/XizWKdq.png">
-    <p class="monitor-text">Версия: 1.7.10</p>
-    <p class="monitor-text">Иновационный проект, мы пиздец какие крутые, глядя на наш ахуенный сайт вы станете реальным Boss of the Gym, и это только начала нашего калла!</p>
-
+  <div class="monitor-body mb-3" style="width: 300px;" v-for="item in JSON.parse(servers)" :key="item.id">
+    <h5 class="monitor-title">{{item.name}}</h5>
+    <p class="monitor-title">Версия: 1.7.10</p>
+    <div class="monitor-title" style="color: #000; margin-left: 12rem;font-size: 14px;">{{item.online + "/" + item.max}}</div>
+    <div сlass="mt-3" style="background-color: #9966cc; height: 5px;"></div>
   </div>
-</div>
+
 </template>
 
 <script>

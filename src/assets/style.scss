@@ -92,56 +92,68 @@ body {
     opacity: 1;
   }
 }
-
-.monitor {
-  position: relative;
-  display: inline-block;
-  flex-direction: column;
-  min-width: 0;
-  word-wrap: break-word;
-  color: #fff;
-  opacity: 1;
-  background-clip: border-box;
-
+.server-block {
+  background-color: #9966cc;
   border-radius: 9px;
-  margin-left: 9px;
+  padding: 0 0 25px 0;
 }
 .monitor-body {
+  margin: auto;
+  min-width: 0;
+  color: #fff;
   border-radius: 9px;
   background-color: #fff;
-
   flex: 1 1 auto;
   min-height: 1px;
-  padding: 1.25rem;
+  padding: 1rem;
 }
-.monitor-text {
-  opacity: 1;
+.monitor-title {
   color: #000;
+  font-size: 16px;
 }
-
+.btn-start {
+  width: 330px;
+  padding: 25px;
+  background-color: #9966cc;
+  border-radius: 9px;
+  border: none;
+  font-size: 24px;
+  color: #fff;
+}
+.btn-soc {
+  width: 330px;
+  padding: 15px;
+  background-color: #9944cc;
+  border-radius: 9px;
+  border: none;
+  font-size: 16px;
+  color: #fff;
+}
+.btn-start:hover {
+  opacity: 0.9;
+  width: 330px;
+  padding: 25px;
+  background-color: #9966cc;
+  border-radius: 9px;
+  border: none;
+  font-size: 24px;
+  color: #fff;
+}
+.btn-soc:hover {
+  opacity: 0.9;
+  width: 330px;
+  padding: 15px;
+  background-color: #9944cc;
+  border-radius: 9px;
+  border: none;
+  font-size: 16px;
+  color: #fff;
+}
 
 .container {
   .jumbotron {
     background-color: #181818;
     
-  }
-  .monitoring {
-    color: #fff;
-    background:rgba(145, 86, 229, 0.8);
-    display: inline-block;
-    border-radius: 9px;
-    margin-right: 50px;
-    height: 250px;
-    width: 200px;
-  }
-  .mon-title {
-    text-align: center;
-  }
-  .mon-onlinebar {
-    border: 0.1875em linear-gradient(left, #000, #fff);
-    border-radius: 50%;
-    height: 5em;
-    width: 5em;
   }
 }
   //Настройки персонажа
@@ -564,10 +576,11 @@ body {
       z-index:2;
     
       .nav_menu{
+        background-color: #9966cc;
         display:grid;
         grid-template-columns: auto 1fr auto;
         grid-column-gap: 3%;
-        padding:35px 0;
+        padding: 15px;
         align-items:center;
     
         &>ul>li{
@@ -596,8 +609,8 @@ body {
         display:inline-block;
         position:relative;
         color:#fff;
-        font-size:20px;
-        font-weight:bold;
+        font-size:12px;
+        font-weight: 600;
         text-decoration:none;
     
         &.outline{

@@ -42,6 +42,9 @@ module.exports = (sequelize, Sequelize) => {
       },
       shop_id: {
         type: Sequelize.INTEGER
+      },
+      version: {
+        type: Sequelize.STRING
       }
     });
   

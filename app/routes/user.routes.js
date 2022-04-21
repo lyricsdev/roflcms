@@ -111,6 +111,5 @@ let fileObj = req.file
     cloakcontroller.cloakcheckexist
   );
   app.post("/api/getservers", ServerController.getservers)
-  app.post("/api/quests", ServerController.quests)
   app.post("/api/getnews",newscontroller.getnews)
 };

@@ -1,47 +1,16 @@
-var fs = require('fs')
+const fs = require('fs')
+const player = require("./../services/player.service");
 
-var respond = {
-  'success' : false,
-  'message' : 'Ошибка загрузки! Пожалуйста, выберите тип файла!'
-}
-var mime = require('mime-types')
-
-function deletefileskin(name)
-{
-  fs.unlink(name, function (err) {            
-       if (err) {                                                 
-           console.error(err);                                    
-       }                                                          
-   });      
-}
-function setdefaultskin(name)
-{
-  try{
-    storage = './dist/skins/'
-    let namef = storage + "default.png"
-
-    let namea = storage + name + ".png"
-    if(fs.existsSync(namea))
-    return;
-    fs.copyFile(namef, namea, (err) => {
-      if (err) throw err;
-    })     
-  }catch(e){
-
-  }
-}
 exports.skindelete = (req, res) => {
 
   let username = req.body.username
-
-  let storage;
 
   console.log(req.body);
  
   let link = './dist/skins/'  + username + '.png'
   try{
-    deletefileskin(link)
-    setdefaultskin(username)
+    player.deletefileskin(link)
+    player.setdefaultskin(username)
   }
   catch(e)
   {
