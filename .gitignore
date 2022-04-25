@@ -25,3 +25,4 @@ app/config/db.config.js
 /dist/img
 /dist/js
 /dist/css
+app/config/db.config.js

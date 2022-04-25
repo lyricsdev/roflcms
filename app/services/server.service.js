@@ -1,5 +1,7 @@
+const db = require("../models");
 
 const util = require('minecraft-server-util');
+const { server: Server} = db;
 
 const client = new util.RCON();
 const options = {

@@ -4,6 +4,7 @@ const skincontroller = require("../controllers/skin.controller");
 const cloakcontroller = require("../controllers/cloak.controller");
 const ServerController = require("../controllers/server.controller");
 const newscontroller = require("../controllers/news.controller");
+const shop_s = require("../services/shop.service");
 
 var fs = require('fs')
 const multer = require('multer')
@@ -112,4 +113,5 @@ let fileObj = req.file
   );
   app.post("/api/getservers", ServerController.getservers)
   app.post("/api/getnews",newscontroller.getnews)
+  app.post("/api/getactiveshop",shop_s.GetActiveShops)
 };
