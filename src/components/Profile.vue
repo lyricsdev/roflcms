@@ -1,79 +1,37 @@
 <template>
   <div class="container">
-    <header class="jumbotron">
-      <h3>
-        <strong>{{currentUser.username}}</strong> Profile
+<div class="row">
+    <div class="col-xl-12 col-md-12 cabinet mt-5">
+      <div class="col-xl-1 col-md-12 cabinet-navbar">
+      <button @click="handleClick" name= "Информация" href="#" type="button" class="cabinet-btn mb-3 far fa-user-tie">
+      
+      </button>
 
-      </h3>
-    </header>
-    <p>
-      <strong>Token:</strong>
-      {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
-    </p>
-    <p>
-      <strong>Id:</strong>
-      {{currentUser.id}}
-    </p>
-      <ul id="example-1">
-        <p v-for="item in JSON.parse(servers)" :key="item.id">
-              {{"server online is : " + item.online + "/" + item.max}}
-          </p>
-      </ul>
-    
-  <div class="row character">
-    <div :class="'col-12 col-lg-6 ' + (skinLoading ? 'unload' : '')">
-      <div class="section">
-        <h3>Внешний вид персонажа</h3>
-        <p>Хотите подчеркнуть свою индивидуальность и выглядеть по-настоящему круто? Персонализируйте Вашего игрового персонажа и загрузите скин всего в два клика!</p>
+      <button @click="handleClick" name= "Настройки" href="#" type="button" class="cabinet-btn mb-3 far fa-hammer"></button>
+      <button  @click="handleClick" name= "Магазин" href="#" type="button" class="cabinet-btn mb-3 far fa-trash"></button>
+      <button @click="handleClick" name= "Безопасность" href="#" type="button" class="cabinet-btn mb-3 far fa-shield-check"></button>
+      
       </div>
-            <div class="section preview">
-           <div class="row">
-                    <div class="col-12 col-sm viewer">
-                        <div class="viewer_dim">
-                            <div id="skin_container"></div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm mt-4 mt-sm-0">
-                        <div>
-                            <h4>Скин</h4>
-                            <p>Вы можете загрузить любой скин в высоком HD качестве!</p>
-                            <p class="mt-2">
-                                <a href="" class="btn_common" @click.prevent="uploadSkin">Загрузить</a>
-                                <a href="#" target="_blank" class="btn_common ml-1" @click.prevent="downloadFile('/skins/' + user.login + '.png', user.login + '_skin.png')">
-                                    <i class="fas fa-arrow-alt-to-bottom"></i>
-                                </a>
-                                <a href="" class="btn_common ml-1" @click.prevent="deleteSkin">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </p>
-                        </div>
-                        <div class="mt-5">
-                            <h4>Плащ</h4>
-
-                            <div>
-                                <p>Загрузите плащ в высоком качестве HD разрешения прямо сейчас!</p>
-                                <p class="mt-2">
-                                    <a href="" class="btn_common" @click.prevent="uploadCloak">Загрузить</a>
-                                    <a href="#" target="_blank" class="btn_common ml-1" @click.prevent="downloadFile('/cloaks/' + user.login + '.png', user.login + '_cloak.png')">
-                                        <i class="fas fa-arrow-alt-to-bottom"></i>
-                                    </a>
-                                    <a href="" class="btn_common ml-1" @click.prevent="deleteCloak">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </p>
-                            </div>
-                           
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <input style="display: none;" id="skin_file" type="file" @change.prevent="uploadSkin($event)">
-        <input style="display: none;" id="cloak_file" type="file" @change.prevent="uploadCloak($event)">
+      <div class="col-xl-4 col-md-12 cabinet-skinviewer">
+        <div id="skin_container" v-show="buttons.first == true">
+        </div>
+        <p v-show="buttons.first == true" style="color: #fff;display: contents;">Всем игрокам доступна загрузка скинов в классическом 64x64 разрешении.</p>
+        <button v-show="buttons.first == true" id="cloak_file" type="button" class="cabinet-btnup">Загрузить скин</button>
+        <br>
+        <p v-show="buttons.first == true" style="color: #fff;display: contents;">Всем игрокам доступна загрузка скинов в классическом 64x64 разрешении.</p>
+        <button v-show="buttons.first == true" id="cloak_file" type="button" class="cabinet-btnup">Загрузить скин</button>
+      <div v-if="buttons.first != true">
+         <img v-for="item in shop" :key="item.id" v-bind:src="item.icon">
+      </div>
+      </div>
+            <div class="col-xl-3 col-md-12 cabinet-info">
+               <div class="cabinet-text mt-4" style="color:#fff;" v-for=" (item ,i) in PlayerInfo" :key="i">{{i + " : " + item}}</div>
+        
+      </div>
+    </div>
   </div>
-  </div>
-  </div>
+</div>
 </template>
-
 <script>
 import * as skinview3d from "skinview3d";
 import { saveAs } from 'file-saver';
@@ -91,7 +49,13 @@ export default {
       skinLoading: false,
       status: false ,
       capestatus: false,
-      servers: null
+      servers: null,
+      buttons: {
+        first: true,
+        second: false
+      },
+      PlayerInfo: null,
+      shop: null
     }
   },
   computed: {
@@ -109,7 +73,14 @@ export default {
 
       await this.getservers()
       console.log(this.servers);
-
+      console.log(this.currentUser)
+      this.PlayerInfo = {
+        "Никнейм" : this.currentUser.username,
+        "Баланс": this.currentUser.balance,
+        "Почта": this.currentUser.email,
+      }
+      await this.getitemsfromshop()
+      console.log(this.shop)
   },
   watch: {
   '$route': function () {
@@ -122,6 +93,30 @@ export default {
   methods: {
     downloadFile(url, name){
       saveAs(url, name);
+    },
+      async handleClick(e) {
+      var names = {
+        player: 'Информация',
+        settings: 'Настройки',
+        Shop: 'Магазин',
+        Security: 'Безопасность',
+      }
+        if(e.target.name == 'Информация')
+        {
+          console.log(this.buttons.first)
+          console.log(this.buttons.second)
+
+          this.buttons.first = true;
+          this.buttons.second = !this.buttons.second;
+        }
+        if(e.target.name == 'Настройки')
+        {
+          console.log(this.buttons.first)
+          console.log(this.buttons.second)
+
+          this.buttons.first = false;
+          this.buttons.second = !this.buttons.second;
+        }
     },
     uploadSkin(event){
       if (event.target.files) 
@@ -191,7 +186,15 @@ export default {
     {
       return this.status = false
     },
-    async checkskin() {
+    async getitemsfromshop() {
+    try {
+        const response = await api.post('/getactiveshop', {
+        })
+         return  this.shop = response.data
+        }catch(error) {
+        }
+    },
+     async checkskin() {
     try {
         const response = await api.post('/skins/checkexist', {
         username: this.currentUser.username
@@ -210,7 +213,7 @@ export default {
         }catch(error) {
         }
     },
-     async getservers() {
+  async getservers() {
     try {
         const response = await api.post('/getservers', {
         })
@@ -219,6 +222,8 @@ export default {
         }
     },
     async initSkin(){
+      if(this.buttons.first == true)
+      {
         let element = document.getElementById("skin_container");
         let numberOfChildren = element.getElementsByTagName('*').length;
         if (numberOfChildren == 1) return;
@@ -237,8 +242,8 @@ export default {
           
         this.skinViewer = new skinview3d.SkinViewer({
           domElement: document.getElementById("skin_container"),
-          width: 300,
-          height: 320,
+          width: 340,
+          height: 360,
           skinUrl: skin,
           capeUrl: cape
         });
@@ -247,6 +252,7 @@ export default {
                 control.enableZoom = false;
                 control.enablePan = false;
                 console.log(this.skinViewer);
+      }
     },
   }
 };

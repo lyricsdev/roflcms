@@ -82,6 +82,8 @@ exports.signin = (req, res) => {
           roles: authorities,
           accessToken: token,
           refreshToken: refreshToken,
+          balance: user.balance,
+          uuid: user.uuid,
         });
       });
     })

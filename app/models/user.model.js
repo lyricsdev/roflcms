@@ -20,7 +20,10 @@ module.exports = (sequelize, Sequelize) => {
     },
     hwidId: {
       type: Sequelize.STRING
-    }
+    },
+    balance: {
+      type: Sequelize.INTEGER
+    },
   });
   return User;
 };

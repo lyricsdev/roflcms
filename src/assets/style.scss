@@ -7,6 +7,7 @@
 @import "~@fortawesome/fontawesome-pro/scss/duotone";
 @import "~@fortawesome/fontawesome-pro/scss/brands";
 
+
 // VARIABLES
 // MINECRAFT
 
@@ -128,25 +129,65 @@ body {
   font-size: 16px;
   color: #fff;
 }
-.btn-start:hover {
-  opacity: 0.9;
-  width: 330px;
-  padding: 25px;
-  background-color: #9966cc;
+
+
+.cabinet {
+  padding: 0px;
+  margin: auto;
+  background-color: #1A1A1A;
   border-radius: 9px;
+  height: 550px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.cabinet-skinviewer {
+  width: 165px;
+  border-radius: 9px;
+  background-color: #242424;
+}
+
+.cabinet-navbar {
+  border-radius: 10px 0 0 10px;
+  text-align: center;
+  background-color: #242424;
+}
+.cabinet-info {
+  border-radius: 0 10px 10px 0;
+  text-align: center;
+  background-color: #242424;
+}
+.cabinet-text {
+  height: 60px;
+  background-color: #393939;
+  border-radius: 9px;
+  margin: auto;
+  text-align: center;
+vertical-align: middle;
+line-height: 60px; 
+}
+.cabinet-btn {
+  margin-top: 65px;
+  width: 40px; height: 40px;
+  background-color: #9966CC;
+  border-radius: 100px;
   border: none;
-  font-size: 24px;
   color: #fff;
 }
-.btn-soc:hover {
-  opacity: 0.9;
-  width: 330px;
-  padding: 15px;
-  background-color: #9944cc;
+.cabinet-upload {
+  margin: auto;
+}
+.cabinet-btnup {
+  font-size: 11px;
+  color: #fff;
+  width: 90px; height: 30px;
+  background-color: #9966CC;
   border-radius: 9px;
   border: none;
-  font-size: 16px;
-  color: #fff;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 7px;
 }
 
 .container {
@@ -158,6 +199,7 @@ body {
   //Настройки персонажа
   .character{
     .section.preview{
+      border-radius: 9px;
       background-color: $blue!important;
       padding:30px 50px 40px;
       margin:15px 0 0;
@@ -189,7 +231,7 @@ body {
       font-size:0;
       margin: -30px 0 -30px -35px;
       padding: 0;
-      text-align:center;
+      text-align: center;
 
       canvas{
         width: 100% !important;
