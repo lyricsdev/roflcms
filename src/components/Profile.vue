@@ -16,21 +16,30 @@
         <div id="skin_container" v-show="buttons.first == true">
         </div>
         <p v-show="buttons.first == true" style="color: #fff;display: contents;">Всем игрокам доступна загрузка скинов в классическом 64x64 разрешении.</p>
-        <button v-show="buttons.first == true" id="cloak_file" type="button" class="cabinet-btnup">Загрузить скин</button>
+        <input style="display: none;" id="skin_file" accept=".png" type="file" @change.prevent="uploadSkin($event)">
+
+        <button v-show="buttons.first == true" id="skin_file" type="button" class="cabinet-btnup" @click.prevent="uploadSkin">Загрузить скин</button>
         <br>
         <p v-show="buttons.first == true" style="color: #fff;display: contents;">Всем игрокам доступна загрузка скинов в классическом 64x64 разрешении.</p>
-        <button v-show="buttons.first == true" id="cloak_file" type="button" class="cabinet-btnup">Загрузить скин</button>
+        <input  style="display: none;" id="cloak_file" accept=".png"  type="file" @change.prevent="uploadCloak($event)">
+
+        <button v-show="buttons.first == true" id="cloak_file" type="button"  class="cabinet-btnup" @click.prevent="uploadCloak">Загрузить Плащ</button>
+
       <div v-if="buttons.first != true">
          <img v-for="item in shop" :key="item.id" v-bind:src="item.icon">
       </div>
+
       </div>
+       
             <div class="col-xl-3 col-md-12 cabinet-info">
                <div class="cabinet-text mt-4" style="color:#fff;" v-for=" (item ,i) in PlayerInfo" :key="i">{{i + " : " + item}}</div>
-        
+      
       </div>
     </div>
   </div>
+
 </div>
+       
 </template>
 <script>
 import * as skinview3d from "skinview3d";
@@ -72,15 +81,14 @@ export default {
       });
 
       await this.getservers()
-      console.log(this.servers);
-      console.log(this.currentUser)
+
       this.PlayerInfo = {
         "Никнейм" : this.currentUser.username,
         "Баланс": this.currentUser.balance,
         "Почта": this.currentUser.email,
       }
       await this.getitemsfromshop()
-      console.log(this.shop)
+
   },
   watch: {
   '$route': function () {
@@ -103,22 +111,20 @@ export default {
       }
         if(e.target.name == 'Информация')
         {
-          console.log(this.buttons.first)
-          console.log(this.buttons.second)
+
 
           this.buttons.first = true;
           this.buttons.second = !this.buttons.second;
         }
         if(e.target.name == 'Настройки')
         {
-          console.log(this.buttons.first)
-          console.log(this.buttons.second)
 
           this.buttons.first = false;
           this.buttons.second = !this.buttons.second;
         }
     },
     uploadSkin(event){
+      console.log(event.target.id)
       if (event.target.files) 
       {
         var formData = new FormData();
@@ -131,6 +137,8 @@ export default {
       else $('#skin_file').click();
     },
     uploadCloak(event){
+            console.log(event.target.id)
+
       if (event.target.files) {
         var formData = new FormData();
         formData.append("body", this.currentUser.username);
@@ -209,7 +217,6 @@ export default {
         username: this.currentUser.username
         })
          return  this.capestatus = response.data
-         console.log(response.data)
         }catch(error) {
         }
     },
@@ -251,7 +258,6 @@ export default {
                 control.enableRotate = true;
                 control.enableZoom = false;
                 control.enablePan = false;
-                console.log(this.skinViewer);
       }
     },
   }

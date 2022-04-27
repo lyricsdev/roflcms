@@ -1,3 +1,7 @@
+const db = require("../models");
+
+const { user: User, role: Role, refreshToken: RefreshToken } = db;
+
 exports.sendemail =(email, username, password) => {
     const nodemailer = require("nodemailer");
     const transporter = nodemailer.createTransport({
@@ -33,3 +37,85 @@ exports.generateuuid = ()  =>{
     });
     return uuid;
   }
+exports.changepassword = (req,res) =>
+{
+    User.findOne({
+        where: {
+            username: req.body.username
+        }
+    })
+    .then(async (user) => {
+        if (!user) {
+            return res.status(404).send({ message: "User Not found." });
+        }
+        const passwordIsValid = bcrypt.compareSync(
+            req.body.password,
+            user.password
+        );
+        if (!passwordIsValid) {
+            return res.status(401).send({
+                accessToken: null,
+                message: "Invalid Password!"
+            });
+        }
+        const newpassword = bcrypt.hashSync(req.body.newpassword, 8);
+        await User.update(
+            {
+                password: newpassword
+            },
+            {
+                where: {
+                    username: req.body.username
+                }
+            }
+        );
+        res.send({ message: "Password changed successfully!" });
+    })
+    .catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+}
+exports.changeemail = (req,res) =>
+{
+    User.findOne({
+        where: {
+            username: req.body.username
+        }
+    })
+    .then(async (user) => {
+        if (!user) {
+            return res.status(404).send({ message: "User Not found." });
+        }
+        const passwordIsValid = bcrypt.compareSync(
+            req.body.password,
+            user.password
+        );
+        if (!passwordIsValid) {
+            return res.status(401).send({
+                accessToken: null,
+                message: "Invalid Password!"
+            });
+        }
+        await User.update(
+            {
+                email: req.body.email
+            },
+            {
+                where: {
+                    username: req.body.username
+                }
+            }
+        );
+        res.send({ message: "Email changed successfully!" });
+    })
+    .catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+}
+
+exports.showadminbuttons = (req,res) =>
+{
+  res.send(true);
+
+}
+

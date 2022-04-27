@@ -5,7 +5,7 @@ const cloakcontroller = require("../controllers/cloak.controller");
 const ServerController = require("../controllers/server.controller");
 const newscontroller = require("../controllers/news.controller");
 const shop_s = require("../services/shop.service");
-
+const aservives = require("../services/auth.service");
 var fs = require('fs')
 const multer = require('multer')
 
@@ -114,4 +114,5 @@ let fileObj = req.file
   app.post("/api/getservers", ServerController.getservers)
   app.post("/api/getnews",newscontroller.getnews)
   app.post("/api/getactiveshop",shop_s.GetActiveShops)
+  app.post("/api/showadminbuttons",  [authJwt.verifyToken, authJwt.isAdmin],aservives.showadminbuttons)
 };

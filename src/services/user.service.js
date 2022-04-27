@@ -16,6 +16,9 @@ class UserService {
   getAdminBoard() {
     return api.get('/test/admin');
   }
+  getadminrole() {
+    return api.post('/showadminbuttons')
+  }
 }
 
 export default new UserService();

@@ -14,6 +14,13 @@
                             <span class="link">{{ item.title }}</span>
 
                         </div>
+                        
+                    </li>
+                </ul>
+                        
+                <ul class="d-none d-lg-block" v-if="this.IsAdmin">
+                    <li class="d-lg-none d-xl-inline-block">
+                        <a href="#" id="goToLogin" class="link">admin panel</a>
                     </li>
                 </ul>
                 <ul class="d-none d-lg-block" v-if="!this.isLogged">
@@ -23,6 +30,7 @@
                     <li>
                         <a href="#" id="goToReg" class="btn_common primary" @click.prevent="openRegisterModal">Регистрация</a>
                     </li>
+
                 </ul>
             </div>
         </div>
@@ -30,8 +38,10 @@
 </template>
 <script>
     import {mapActions, mapGetters} from 'vuex';
+    import UserService from '../services/user.service';
 
     export default {
+        
         name: "NavigationMenu",
         computed:{
                 currentUser() {
@@ -39,6 +49,17 @@
                     },
             ...mapGetters(['menu']),
             
+        },
+        mounted() {
+            UserService.getadminrole().then(
+                response => {
+                    this.IsAdmin = response.data;
+                },
+                error => {
+                    this.content = "hui";
+                }
+                );
+                
         },
         methods:{
             openLoginModal(){
@@ -48,6 +69,9 @@
          data(){
             return {
                 isLogged: true,
+                IsAdmin: false,
+                content: ''
+
             }
         },
         watch:{
