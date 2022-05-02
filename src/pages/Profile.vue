@@ -26,27 +26,73 @@
         <button v-show="buttons.first == true" id="cloak_file" type="button"  class="cabinet-btnup" @click.prevent="uploadCloak">Загрузить Плащ</button>
 
       <div v-if="buttons.first != true">
-         <img v-for="item in shop" :key="item.id" v-bind:src="item.icon">
+              <a href="#" class="col btn_common" v-for="item in shop" :key="item.id" @click.prevent="openItem(item)">
+                    <h4>{{ item.name }}</h4>
+                    <img :src="item.icon" width="64" height="64">
+                  
+                    <span class="btn_common primary">
+                        {{ item.price }} {{ declOfNum(item.price, ['аспарик', 'аспарика', 'аспариков']) }}
+                        <small>за {{ item.count }} шт.</small>
+                    </span>
+                </a>
+
       </div>
 
       </div>
        
             <div class="col-xl-3 col-md-12 cabinet-info">
                <div class="cabinet-text mt-4" style="color:#fff;" v-for=" (item ,i) in PlayerInfo" :key="i">{{i + " : " + item}}</div>
-      
       </div>
     </div>
   </div>
 
 </div>
-       
+        <b-modal v-model="modal" modal-class="modal" hide-header hide-footer content-class="custom_modal" size="lg" v-if="item">
+            <div id="modal">
+                <div class="window buyItem">
+                    <div class="header">
+                        <h2>{{ item.name }}</h2>
+                        <p>Магазин: <b>{{ "chlen" }}</b></p>
+                    </div>
+                    <div class="body">
+                        <div class="row align-items-center justify-content-center">
+                            <img :src="item.icon" width="140" height="140">
+                            <div class="col-12 col-sm pl-4">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <a href="#" class="btn_large success" @click.prevent="buyItem">
+                            <span>Купить за <span id="price">{{item.price}}</span> </span>
+                        </a>
+                    </div>
+                    <div class="enchant" style="display: none;">
+                        <div class="content">
+                            <h3>
+                                Зачаровать предмет
+                                <a href="#" onclick="$('.enchant').fadeOut('150')">X</a>
+                            </h3>
+                            <ul>
+                              
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </b-modal>
+
 </template>
 <script>
 import * as skinview3d from "skinview3d";
 import { saveAs } from 'file-saver';
 import $ from "jquery";
 import api from '../services/api'
+import modal from './model.vue';
+
 export default {
+      components: {
+      modal,
+    },
   name: 'Profile',
   data(){
     return {
@@ -64,7 +110,11 @@ export default {
         second: false
       },
       PlayerInfo: null,
-      shop: null
+      shop: null,
+      isModalVisible: false,
+      modal: false,
+      item: null,
+
     }
   },
   computed: {
@@ -98,7 +148,18 @@ export default {
      
     },
   },
-  methods: {
+  methods: 
+  {
+     openItem(item){
+                this.item = item;
+                this.modal = true;
+            },
+          showModal() {
+        this.isModalVisible = true;
+      },
+      closeModal() {
+        this.isModalVisible = false;
+      },
     downloadFile(url, name){
       saveAs(url, name);
     },
@@ -260,6 +321,7 @@ export default {
                 control.enablePan = false;
       }
     },
+    
   }
 };
 </script>

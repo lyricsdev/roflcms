@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+    <g fill="none" fill-rule="evenodd">
+        <rect width="48" height="48"/>
+        <path stroke="#000000" stroke-width="2" d="M13,13 L35,35" stroke-linecap="round" transform="matrix(-1 0 0 1 48 0)"/>
+        <path stroke="#000000" stroke-width="2" d="M13,13 L35,35" stroke-linecap="round"/>
+    </g>
+</svg>
