@@ -1,21 +1,12 @@
 <template>
 
   <div id="app" class=''>
-        <navigation-menu></navigation-menu>
+        <navigation-menu/>
     <div class="container">
       <router-view />
 
     </div>
-          <div class="backdrop">
-                    <div class="item circle"></div>
-                    <div class="item circle"></div>
-                    <div class="item circle"></div>
-                    <!---->
-                    <div class="item circle"></div>
-                    <div class="item circle"></div>
-                    <div class="item circle"></div>
 
-                </div>
   </div>
 </template>
 
@@ -66,6 +57,6 @@ export default {
 <style lang="scss">
 @import "../assets/style.scss";
 @import "../assets/modal.scss";
-
+@import "../assets/home.scss";
 
 </style>

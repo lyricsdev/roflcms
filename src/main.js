@@ -3,13 +3,16 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import "bootstrap";
-import { FontAwesomeIcon } from './plugins/font-awesome'
 import scplugin from "./scplugin";
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
 import setupInterceptors from './services/setupInterceptors';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap";
 
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faPhone, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+library.add(faPhone, faSpinner);
 
 setupInterceptors(store);
 
@@ -20,7 +23,6 @@ createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)
   .mount("#app");
 
-  
   router.beforeEach((to, from, next) => {
     const nearestWithTitle = to.matched.slice().reverse().find(r => r.meta && r.meta.title);
 
