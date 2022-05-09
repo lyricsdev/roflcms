@@ -7,7 +7,7 @@ exports.getnews = (req, res) => {
     News.findAll( {
         attributes: ['id', 'title', "content","author","createdAt"],
         order: [ [ 'createdAt', 'DESC' ]],
-        limit: 2
+        limit: 10
     }).then(async (news) => {
         res.send(news).status(200);
     });    

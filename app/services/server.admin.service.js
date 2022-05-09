@@ -1,3 +1,5 @@
+const db = require("../models");
+
 const { Role,server: Server} = db;
 
 const util = require('minecraft-server-util');
@@ -125,6 +127,30 @@ exports.editserver = async (req, res) => {
         });
         res.status(200).json({
             success: true
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            error: err
+        });
+    }
+}
+exports.getserverbyid = async (req, res) => {
+    try {
+        const server = await Server.findOne({
+            where: {
+                id: req.params.id
+            }
+        });
+        if (!server) {
+            return res.status(404).json({
+                success: false,
+                error: "Server not found"
+            });
+        }
+        res.status(200).json({
+            success: true,
+            data: server
         });
     } catch (err) {
         res.status(500).json({

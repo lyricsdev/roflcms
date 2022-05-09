@@ -20,12 +20,13 @@ module.exports = function(app) {
   app.post('/api/admin/users/edituser/:id',[authJwt.verifyToken, authJwt.isAdmin],AuserService.edituser);
   app.post('/api/admin/users/createuser',[authJwt.verifyToken, authJwt.isAdmin],AuserService.createuser);
   app.post('/api/admin/users/deleteuser/:id',[authJwt.verifyToken, authJwt.isAdmin],AuserService.deleteuser);
+  app.post('/api/admin/users/getuserby/:id',[authJwt.verifyToken, authJwt.isAdmin],AuserService.getuserbyid);
 
   app.post("/api/admin/servers/addserver",[authJwt.verifyToken, authJwt.isAdmin],AserverService.addserver);
   app.post("/api/admin/servers/getservers",[authJwt.verifyToken, authJwt.isAdmin],AserverService.getservers);
   app.post("/api/admin/servers/editserver/:id",[authJwt.verifyToken, authJwt.isAdmin],AserverService.editserver);
   app.post("/api/admin/servers/deleteserver/:id",[authJwt.verifyToken, authJwt.isAdmin],AserverService.deleteserver);
-  app.post("/api/admin/servers/getserver/:id",[authJwt.verifyToken, authJwt.isAdmin],AserverService.getserver);
+  app.post("/api/admin/servers/getserver/:id",[authJwt.verifyToken, authJwt.isAdmin],AserverService.getserverbyid);
   app.post("/api/admin/servers/sendrcontoid/:id",[authJwt.verifyToken, authJwt.isAdmin],AserverService.sendrcontoid);
 
   app.post("/api/admin/news/addnews",[authJwt.verifyToken, authJwt.isAdmin],AnewsService.addnews);

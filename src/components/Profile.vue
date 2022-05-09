@@ -103,22 +103,13 @@ export default {
       saveAs(url, name);
     },
       async handleClick(e) {
-      var names = {
-        player: 'Информация',
-        settings: 'Настройки',
-        Shop: 'Магазин',
-        Security: 'Безопасность',
-      }
         if(e.target.name == 'Информация')
         {
-
-
           this.buttons.first = true;
           this.buttons.second = !this.buttons.second;
         }
         if(e.target.name == 'Настройки')
         {
-
           this.buttons.first = false;
           this.buttons.second = !this.buttons.second;
         }
