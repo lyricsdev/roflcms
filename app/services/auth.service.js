@@ -112,24 +112,6 @@ exports.changeemail = (req,res) =>
         res.status(500).send({ message: err.message });
     });
 }
-exports.getuserbyid = (req,res) =>
-{
-    User.findOne({
-        where: {
-            id: req.params.id
-        }
-    })
-    .then(async (user) => {
-        if (!user) {
-            return res.status(404).send({ message: "User Not found." });
-        }
-        res.send(user);
-    })
-    .catch(err => {
-        res.status(500).send({ message: err.message });
-    }
-    );
-}
 
 exports.showadminbuttons = (req,res) =>
 {
